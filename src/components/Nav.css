@@ -7,18 +7,26 @@
     justify-content: space-between;
 }
 
-.nav-container_link {
-    margin: 0px 20px 0px 0px;
-    text-decoration: none;
-    color: white;
-    font-size: 20px;
+.nav-container_left {
     display: flex;
     align-items: center;
 }
 
+.nav-container_right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-container_link {
+    margin-right: 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
 .nav-container_link:hover {
     cursor: pointer;
-    color: lightgray
+    color: lightgray;
 }
 
 #youtubelogo {

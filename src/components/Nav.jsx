@@ -7,7 +7,7 @@ export default function Nav({ handleFilter }) {
     <div className="nav-container">
       <div className="nav-container_left">
         <Link to="/home" className="nav-container_link">
-          <img src="./public/assets/youtubelogo.png" alt="Home" id="youtubelogo" />
+          <img src="../assets/youtubelogo.png" alt="Home" id="youtubelogo" />
         </Link>
         <Filter handleFilter={handleFilter} />
       </div>

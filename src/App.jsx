@@ -17,7 +17,7 @@ export default function App() {
     <>
       <Nav handleFilter={handleFilter} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Shows />} />
         <Route path="/:search" element={<Shows />} />
         <Route path="/:search/:id" element={<Show />} />
         <Route path="/about" element={<About />} />

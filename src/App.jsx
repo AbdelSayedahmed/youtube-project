@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import About from "/src/components/About.jsx";
-import Home from "/src/components/Home.jsx";
 import Show from "/src/components/Show.jsx";
 import Nav from "/src/components/Nav.jsx";
 import Shows from "/src/components/Shows.jsx";

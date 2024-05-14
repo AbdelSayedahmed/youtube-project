@@ -1,25 +1,26 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import About from "/src/components/About.jsx";
-import Show from "/src/components/Show.jsx";
-import Nav from "/src/components/Nav.jsx";
-import Shows from "/src/components/Shows.jsx";
+import About from "./components/About.jsx";
+import Show from "./components/Show.jsx";
+import Nav from "./components/Nav.jsx";
+import Shows from "./components/Shows.jsx";
+import Home from "./components/Home.jsx";
 import "./App.css";
 
 export default function App() {
-  const [search, setSearch] = useState("");
-  function handleFilter(input) {
-    setSearch(input);
-  }
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <>
-      <Nav handleFilter={handleFilter} />
+      <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <Routes>
-        <Route path="/" element={<Shows />} />
-        <Route path="/:search" element={<Shows />} />
-        <Route path="/:search/:id" element={<Show />} />
         <Route path="/about" element={<About />} />
+        <Route path="/:id" element={<Show />} />
+        <Route
+          path="/search/:query"
+          element={<Shows setSearchTerm={setSearchTerm} />}
+        />
+        <Route path="/" element={<Home />} />
       </Routes>
     </>
   );

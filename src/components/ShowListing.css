@@ -1,6 +1,18 @@
 .listing-container {
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    gap: 20px;
+    width: 400px;
+    margin: 30px;
+    color: white;
+}
+
+.listing-container img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid grey;
+}
+
+.listing-container h3 {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

@@ -1,0 +1,44 @@
+
+.form-container {
+    width: 500px; 
+    margin: 20px auto; 
+    padding: 20px;
+    background-color: #f4f4f4; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+}
+
+
+label {
+    display: block; /*will change so doesnt take page */
+    margin-bottom: 5px; 
+    color: #333; 
+    font-weight: bold; 
+}
+
+
+input[type="text"],
+textarea {
+    width: 100%; /* want it to fill box */
+    padding: 8px; 
+    margin-bottom: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+
+
+button {
+    width: 100%; /* will change later */
+    padding: 10px 0; 
+    background-color: #007BFF; 
+    color: white; /* will change late */
+    font-size: 16px; /* will change later */
+    border: none; /* No border */
+    border-radius: 4px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; /* googled its for :Smooth transition for background color */
+}
+
+button:hover {
+    background-color: #0056b3; 
+}

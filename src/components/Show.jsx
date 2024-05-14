@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { getVideoDetails } from "../utils/fetch";
 import "./Show.css";
 
-export default function Show({ videoId }) {
+export default function Show() {
+  const { id: videoId } = useParams();  // Get videoId from URL params
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

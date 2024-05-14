@@ -1,7 +1,7 @@
 const tokens = [
   import.meta.env.VITE_ABDEL_API_KEY,
   import.meta.env.VITE_ARI_API_KEY,
-  import.meta.env.VITE_SHANEL_API_KEY
+  import.meta.env.VITE_SHANEL_API_KEY,
 ];
 
 function createKeyCycler(tokens) {
@@ -53,11 +53,31 @@ export async function searchVideos(query) {
 }
 
 // Function to show a specific video
-export function showVideo(videoId) {
-  const iframe = document.createElement("iframe");
-  iframe.width = "560";
-  iframe.height = "315";
-  iframe.src = `https://www.youtube.com/embed/${videoId}`;
-  iframe.allowFullscreen = true;
-  document.body.appendChild(iframe);
+export async function getVideoDetails(videoId) {
+  try {
+    const apiKey = getNextApiKey();
+    console.log(`Using API Key: ${apiKey}`);
+    const response = await fetch(
+      `https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&part=snippet,contentDetails,statistics&id=${videoId}`
+    );
+    const data = await response.json();
+    console.log(`Response Data:`, data);
+
+    if (data.items.length === 0) {
+      throw new Error('Video not found');
+    }
+
+    const video = data.items[0];
+    return {
+      title: video.snippet.title,
+      description: video.snippet.description,
+      thumbnail: video.snippet.thumbnails.high.url,
+      videoId: video.id,
+      statistics: video.statistics,
+      publishedAt: video.snippet.publishedAt
+    };
+  } catch (error) {
+    console.error("Error fetching video details:", error);
+    return null;
+  }
 }

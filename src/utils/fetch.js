@@ -1,6 +1,7 @@
 const tokens = [
   import.meta.env.VITE_ABDEL_API_KEY,
   import.meta.env.VITE_ARI_API_KEY,
+  import.meta.env.VITE_SHANEL_API_KEY
 ];
 
 function createKeyCycler(tokens) {

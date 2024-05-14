@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getVideoDetails } from "../utils/fetch";
+import Comments from "./Comments.jsx"
 import "./Show.css";
 
 export default function Show() {
@@ -65,6 +66,7 @@ export default function Show() {
           {showFullDescription ? "Show Less" : "Show More..."}
         </button>
       </p>
+      <Comments />
     </div>
   );
 }

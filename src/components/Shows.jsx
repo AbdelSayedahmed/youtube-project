@@ -15,6 +15,8 @@ export default function Shows({ setSearchTerm }) {
       .catch((error) => console.error("Error searching videos:", error));
     return () => {
       setSearchTerm("");
+
+      
     };
   }, [query]);
 

@@ -4,10 +4,11 @@ import { getVideoDetails } from "../utils/fetch";
 import "./Show.css";
 
 export default function Show() {
-  const { id: videoId } = useParams();  // Get videoId from URL params
+  const { id: videoId } = useParams();
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   useEffect(() => {
     async function fetchVideo() {
@@ -26,17 +27,13 @@ export default function Show() {
     fetchVideo();
   }, [videoId]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  if (!video) return <div>No video found.</div>;
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!video) {
-    return <div>No video found.</div>;
-  }
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
 
   return (
     <div className="video-container">
@@ -50,13 +47,24 @@ export default function Show() {
           title={video.title}
         ></iframe>
       </div>
-      <p>{video.description}</p>
       <div className="video-stats">
-        <span>Views: {video.statistics.viewCount}</span>
-        <span>Likes: {video.statistics.likeCount}</span>
-        <span>Comments: {video.statistics.commentCount}</span>
+        <span><strong>Views:</strong> {video.statistics.viewCount}</span>
+        <span><strong>Likes:</strong> {video.statistics.likeCount}</span>
+        <br />
+        <span>
+          <strong>Published on:</strong> {new Date(video.publishedAt).toLocaleDateString()}
+        </span>
       </div>
-      <p>Published on: {new Date(video.publishedAt).toLocaleDateString()}</p>
+      <p>
+        <strong>Description</strong>
+        <br />
+        {showFullDescription
+          ? video.description
+          : `${video.description.slice(0, 100)}...`}
+        <button onClick={toggleDescription} className="toggle-description-btn">
+          {showFullDescription ? "Show Less" : "Show More..."}
+        </button>
+      </p>
     </div>
   );
 }

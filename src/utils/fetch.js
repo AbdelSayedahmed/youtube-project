@@ -64,7 +64,7 @@ export async function getVideoDetails(videoId) {
     console.log(`Response Data:`, data);
 
     if (data.items.length === 0) {
-      throw new Error('Video not found');
+      throw new Error("Video not found");
     }
 
     const video = data.items[0];
@@ -74,7 +74,7 @@ export async function getVideoDetails(videoId) {
       thumbnail: video.snippet.thumbnails.high.url,
       videoId: video.id,
       statistics: video.statistics,
-      publishedAt: video.snippet.publishedAt
+      publishedAt: video.snippet.publishedAt,
     };
   } catch (error) {
     console.error("Error fetching video details:", error);

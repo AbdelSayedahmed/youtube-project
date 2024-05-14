@@ -1,3 +1,8 @@
+import React from "react";
+import "./Show.css";
+
 export default function Show() {
-  return null;
+  return (
+    <h1>Show</h1>
+  );
 }

@@ -1,6 +1,30 @@
-#filter-input {
-    border-radius: 15px;
-    border: 1px solid black;
-    padding: 6px;
-    width: 300px;
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+.filter-form .search-container {
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid grey;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    background: white;
+}
+
+.filter-form input[type=text] {
+    padding: 5px 10px;
+    font-size: 17px;
+    border: none;
+    width: 400px;
+    background: white;
+    border-radius: 5px 0 0 5px;
+}
+
+.filter-form button {
+    padding: 5px 10px;
+    background: grey;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
 }

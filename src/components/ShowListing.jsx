@@ -1,7 +1,7 @@
+import React from "react";
 import "./ShowListing.css";
 
-export default function ShowListing({ show }) {
-  const { title, thumbnail } = show;
+export default function ShowListing({ title, thumbnail }) {
   return (
     <div className="listing-container">
       <img src={thumbnail} alt={`Thumbnail of ${title}`} />

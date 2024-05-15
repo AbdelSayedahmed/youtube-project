@@ -18,76 +18,83 @@ function createKeyCycler(tokens) {
 const getNextApiKey = createKeyCycler(tokens);
 
 // Function to show 12 random videos on load
-export async function getRandomVideos() {
-  try {
-    const response = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?key=${getNextApiKey()}&part=snippet&chart=mostPopular&maxResults=12`
-    );
-    const data = await response.json();
-    const videos = data.items.map((item) => ({
-      title: item.snippet.title,
-      videoId: item.id,
-      thumbnail: item.snippet.thumbnails.standard.url,
-    }));
-    return videos;
-  } catch (error) {
-    console.error("Error fetching random videos:", error);
-    return [];
-  }
+export function getRandomVideos() {
+  return fetch(
+    `https://www.googleapis.com/youtube/v3/videos?key=${getNextApiKey()}&part=snippet&chart=mostPopular&maxResults=12`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      return data.items.map((item) => ({
+        title: item.snippet.title,
+        videoId: item.id,
+        thumbnail:
+          item.snippet.thumbnails?.standard?.url ||
+          item.snippet.thumbnails?.default?.url,
+      }));
+    })
+    .catch((error) => {
+      console.log("Error fetching random videos:", error);
+      return [];
+    });
 }
 
 // Function to show 12 videos on search
-export async function searchVideos(query) {
-  try {
-    const response = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?key=${getNextApiKey()}&part=snippet&q=${query}&maxResults=25`
-    );
-    const data = await response.json();
-    const videos = data.items
-      .map((item) => ({
-        title: item.snippet.title,
-        videoId: item.id.videoId,
-        thumbnail: item.snippet.thumbnails.high.url,
-        description: item.snippet.description,
-        kind: item.id.kind
-      }))
-      .filter(
-        (item) =>
-          item.kind !== "youtube#channel" && item.description !== ""
-      );
-    return videos;
-  } catch (error) {
-    console.error("Error searching videos:", error);
-    return [];
-  }
+export function searchVideos(query) {
+  return fetch(
+    `https://www.googleapis.com/youtube/v3/search?key=${getNextApiKey()}&part=snippet&q=${query}&maxResults=25`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      return data.items
+        .map((item) => ({
+          title: item.snippet.title,
+          videoId: item.id.videoId,
+          thumbnail:
+            item.snippet.thumbnails?.high?.url ||
+            item.snippet.thumbnails?.default?.url,
+          description: item.snippet.description,
+          kind: item.id.kind,
+        }))
+        .filter(
+          (item) => item.kind !== "youtube#channel" && item.description !== ""
+        );
+    })
+    .catch((error) => {
+      console.error("Error searching videos:", error);
+      return [];
+    });
 }
 
 // Function to show a specific video
-export async function getVideoDetails(videoId) {
-  try {
-    const apiKey = getNextApiKey();
-    console.log(`Using API Key: ${apiKey}`);
-    const response = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&part=snippet,contentDetails,statistics&id=${videoId}`
-    );
-    const data = await response.json();
-    console.log(`Response Data:`, data);
+export function getVideoDetails(videoId) {
+  const apiKey = getNextApiKey();
+  console.log(`Using API Key: ${apiKey}`);
 
-    if (data.items.length === 0) {
-      throw new Error("Video not found");
-    }
+  return fetch(
+    `https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&part=snippet,contentDetails,statistics&id=${videoId}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(`Response Data:`, data);
 
-    const video = data.items[0];
-    return {
-      title: video.snippet.title,
-      description: video.snippet.description,
-      thumbnail: video.snippet.thumbnails.high.url,
-      videoId: video.id,
-      statistics: video.statistics,
-      publishedAt: video.snippet.publishedAt,
-    };
-  } catch (error) {
-    console.error("Error fetching video details:", error);
-    return null;
-  }
+      if (data.items.length === 0) {
+        throw new Error("Video not found");
+      }
+
+      const video = data.items[0];
+      return {
+        title: video.snippet.title,
+        description: video.snippet.description,
+        thumbnail:
+          video.snippet.thumbnails?.high?.url ||
+          video.snippet.thumbnails?.default?.url,
+        videoId: video.id,
+        statistics: video.statistics,
+        publishedAt: video.snippet.publishedAt,
+      };
+    })
+    .catch((error) => {
+      console.error("Error fetching video details:", error);
+      return null;
+    });
 }

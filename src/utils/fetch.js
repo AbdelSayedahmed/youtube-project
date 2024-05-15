@@ -20,17 +20,21 @@ const getNextApiKey = createKeyCycler(tokens);
 // Function to show 12 random videos on load
 export function getRandomVideos() {
   return fetch(
-    `https://www.googleapis.com/youtube/v3/videos?key=${getNextApiKey()}&part=snippet&chart=mostPopular&maxResults=12`
+    `https://www.googleapis.com/youtube/v3/videos?key=${getNextApiKey()}&part=snippet&chart=mostPopular&maxResults=15`
   )
     .then((response) => response.json())
     .then((data) => {
-      return data.items.map((item) => ({
-        title: item.snippet.title,
-        videoId: item.id,
-        thumbnail:
-          item.snippet.thumbnails?.standard?.url ||
-          item.snippet.thumbnails?.default?.url,
-      }));
+      return data.items
+        .map((item) => ({
+          title: item.snippet.title,
+          videoId: item.id,
+          thumbnail: item.snippet.thumbnails.standard.url,
+          description: item.snippet.description,
+          kind: item.id.kind,
+        }))
+        .filter(
+          (item) => item.kind !== "youtube#channel" && item.description !== ""
+        );
     })
     .catch((error) => {
       console.log("Error fetching random videos:", error);
@@ -49,9 +53,7 @@ export function searchVideos(query) {
         .map((item) => ({
           title: item.snippet.title,
           videoId: item.id.videoId,
-          thumbnail:
-            item.snippet.thumbnails?.high?.url ||
-            item.snippet.thumbnails?.default?.url,
+          thumbnail: item.snippet.thumbnails.high.url,
           description: item.snippet.description,
           kind: item.id.kind,
         }))
@@ -67,20 +69,14 @@ export function searchVideos(query) {
 
 // Function to show a specific video
 export function getVideoDetails(videoId) {
-  const apiKey = getNextApiKey();
-  console.log(`Using API Key: ${apiKey}`);
-
   return fetch(
-    `https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&part=snippet,contentDetails,statistics&id=${videoId}`
+    `https://www.googleapis.com/youtube/v3/videos?key=${getNextApiKey()}&part=snippet,contentDetails,statistics&id=${videoId}`
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log(`Response Data:`, data);
-
       if (data.items.length === 0) {
         throw new Error("Video not found");
       }
-
       const video = data.items[0];
       return {
         title: video.snippet.title,

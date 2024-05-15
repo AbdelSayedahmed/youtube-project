@@ -4,6 +4,7 @@ const tokens = [
   import.meta.env.VITE_SHANEL_API_KEY,
 ];
 
+// Function to cycle through all keys
 function createKeyCycler(tokens) {
   let currentIndex = 0;
 
@@ -16,10 +17,11 @@ function createKeyCycler(tokens) {
 
 const getNextApiKey = createKeyCycler(tokens);
 
+// Function to show 12 random videos on load
 export async function getRandomVideos() {
   try {
     const response = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?key=${getNextApiKey()}&part=snippet&chart=mostPopular&maxResults=10`
+      `https://www.googleapis.com/youtube/v3/videos?key=${getNextApiKey()}&part=snippet&chart=mostPopular&maxResults=12`
     );
     const data = await response.json();
     const videos = data.items.map((item) => ({
@@ -34,17 +36,25 @@ export async function getRandomVideos() {
   }
 }
 
+// Function to show 12 videos on search
 export async function searchVideos(query) {
   try {
     const response = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?key=${getNextApiKey()}&part=snippet&q=${query}&maxResults=10`
+      `https://www.googleapis.com/youtube/v3/search?key=${getNextApiKey()}&part=snippet&q=${query}&maxResults=25`
     );
     const data = await response.json();
-    const videos = data.items.map((item) => ({
-      title: item.snippet.title,
-      videoId: item.id.videoId,
-      thumbnail: item.snippet.thumbnails.high.url,
-    }));
+    const videos = data.items
+      .map((item) => ({
+        title: item.snippet.title,
+        videoId: item.id.videoId,
+        thumbnail: item.snippet.thumbnails.high.url,
+        description: item.snippet.description,
+        kind: item.id.kind
+      }))
+      .filter(
+        (item) =>
+          item.kind !== "youtube#channel" && item.description !== ""
+      );
     return videos;
   } catch (error) {
     console.error("Error searching videos:", error);

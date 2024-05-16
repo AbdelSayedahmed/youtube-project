@@ -17,7 +17,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/:id" element={<Show />} />
         <Route
-          path="/search/:query"
+          path="/search/:search"
           element={<Shows setSearchTerm={setSearchTerm} />}
         />
         <Route path="/" element={<Home />} />

@@ -5,10 +5,10 @@ import ShowGrid from "./ShowGrid";
 
 export default function Shows({ setSearchTerm }) {
   const [items, setItems] = useState([]);
-  const { query } = useParams();
+  const { search } = useParams();
 
   useEffect(() => {
-    searchVideos(query)
+    searchVideos(search)
       .then((data) => {
         setItems(data);
       })
@@ -18,7 +18,7 @@ export default function Shows({ setSearchTerm }) {
 
       
     };
-  }, [query]);
+  }, [search]);
 
   return <ShowGrid items={items} />;
 }

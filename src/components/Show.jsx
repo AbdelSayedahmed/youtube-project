@@ -12,21 +12,25 @@ export default function Show() {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   useEffect(() => {
-    async function fetchVideo() {
+    function fetchVideo() {
       setLoading(true);
       setError(null);
-      try {
-        const videoDetails = await getVideoDetails(videoId);
-        setVideo(videoDetails);
-      } catch (err) {
-        setError("Failed to fetch video details.");
-      } finally {
-        setLoading(false);
-      }
+  
+      getVideoDetails(videoId)
+        .then(videoDetails => {
+          setVideo(videoDetails);
+        })
+        .catch(err => {
+          setError("Failed to fetch video details.");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
-
+  
     fetchVideo();
   }, [videoId]);
+  
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;

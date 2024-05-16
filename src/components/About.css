@@ -1,0 +1,28 @@
+.group-members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 20px; 
+    text-align: center;
+    color:white ;
+    padding-top: 200px;
+    
+  }
+  
+  .group-member {
+    width: 300px; 
+    padding: 15px;
+    
+  }
+  
+  .group-member img {
+    width: 150px; 
+    height: 150px; 
+    object-fit: cover;
+    border-radius: 50%; 
+    box-shadow: 5px 5px 8px gray;
+  }
+  
+  h1 {
+    text-align: center;
+  }

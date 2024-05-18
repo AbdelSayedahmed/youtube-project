@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getVideoDetails } from "../utils/fetch";
+import { decoder, getVideoDetails } from "../utils/fetch";
 import Comments from "./Comments.jsx";
-import decoder from "../utils/decoder.js";
 import "./Show.css";
 
 export default function Show() {

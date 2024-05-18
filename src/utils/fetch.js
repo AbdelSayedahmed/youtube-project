@@ -94,3 +94,10 @@ export function getVideoDetails(videoId) {
       return null;
     });
 }
+
+// Function to decode HTML entities
+export function decoder(text) {
+  const textArea = document.createElement("textarea");
+  textArea.innerHTML = text;
+  return textArea.value;
+}

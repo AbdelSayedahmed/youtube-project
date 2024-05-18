@@ -1,6 +1,6 @@
 import React from "react";
 import "./ShowListing.css";
-import decoder from "../utils/decoder";
+import { decoder } from "../utils/fetch";
 
 export default function ShowListing({ title, thumbnail }) {
   return (
